@@ -7,7 +7,10 @@ const productSchema = new Schema<IProducts>({
   price: { type: Number, required: true },
   category: { type: String, required: true },
   tags: { type: [String], required: true },
-  variants: { type: [{ type: String, value: String }], required: true },
+  variants: {
+    type: [{ type: { type: String }, value: { type: String } }],
+    required: true,
+  },
   inventory: { type: { quantity: Number, inStock: Boolean }, required: true },
 });
 
