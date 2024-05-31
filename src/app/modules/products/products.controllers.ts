@@ -44,8 +44,27 @@ const getAProduct = async (req: Request, res: Response, next: NextFunction) => {
     next(error);
   }
 };
+const updateAProduct = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const id = req.params.id;
+    const productData = req.body;
+    const data = await productServices.updateAProductFromDB(id, productData);
+    res.send({
+      success: true,
+      message: "Product updated successfully!",
+      data: data,
+    });
+  } catch (error) {
+    next(error);
+  }
+};
 export const productsController = {
   addProduct,
   getAllProduct,
   getAProduct,
+  updateAProduct,
 };

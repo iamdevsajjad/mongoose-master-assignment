@@ -14,9 +14,18 @@ const fetchAProductFromDB = async (id: string) => {
   const response = await Product.findById(id);
   return response;
 };
+const updateAProductFromDB = async (id: string, productData: IProducts) => {
+  const response = await Product.findOneAndUpdate(
+    { _id: id },
+    { $set: productData },
+    { new: true }
+  );
+  return response;
+};
 
 export const productServices = {
   addProductOnDB,
   fetchAllProductsFromDB,
   fetchAProductFromDB,
+  updateAProductFromDB,
 };

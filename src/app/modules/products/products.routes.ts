@@ -9,4 +9,6 @@ router.get("/", productsController.getAllProduct);
 
 router.get("/:id", productsController.getAProduct);
 
+router.put("/:id", productsController.updateAProduct);
+
 export default router;
