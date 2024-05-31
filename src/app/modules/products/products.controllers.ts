@@ -14,6 +14,7 @@ const addProduct = async (req: Request, res: Response, next: NextFunction) => {
     next(error);
   }
 };
+
 const getAllProduct = async (
   req: Request,
   res: Response,
@@ -30,8 +31,21 @@ const getAllProduct = async (
     next(error);
   }
 };
-
+const getAProduct = async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    const id = req.params.id;
+    const data = await productServices.fetchAProductFromDB(id);
+    res.send({
+      success: true,
+      message: "Product fetched successfully!",
+      data: data,
+    });
+  } catch (error) {
+    next(error);
+  }
+};
 export const productsController = {
   addProduct,
   getAllProduct,
+  getAProduct,
 };
