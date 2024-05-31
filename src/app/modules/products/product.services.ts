@@ -28,10 +28,18 @@ const deleteAProductFromDB = async (id: string) => {
   return response;
 };
 
+const searchProductsFromDB = async (name: string) => {
+  const response = await Product.find({
+    name: { $regex: name, $options: "i" },
+  });
+  return response;
+};
+
 export const productServices = {
   addProductOnDB,
   fetchAllProductsFromDB,
   fetchAProductFromDB,
   updateAProductFromDB,
   deleteAProductFromDB,
+  searchProductsFromDB,
 };

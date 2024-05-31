@@ -21,6 +21,15 @@ const getAllProduct = async (
   next: NextFunction
 ) => {
   try {
+    const name = req.query.searchTerm;
+    if (name) {
+      const data = await productServices.searchProductsFromDB(name as string);
+      return res.send({
+        success: true,
+        message: `Products matching search term '${name}' fetched successfully`,
+        data: data,
+      });
+    }
     const data = await productServices.fetchAllProductsFromDB();
     res.send({
       success: true,
