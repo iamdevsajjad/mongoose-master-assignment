@@ -18,7 +18,7 @@ const addProduct = async (req: Request, res: Response, next: NextFunction) => {
 const getAllProduct = async (
   req: Request,
   res: Response,
-  next: NextFunction
+  next: NextFunction,
 ) => {
   try {
     const name = req.query.searchTerm;
@@ -56,7 +56,7 @@ const getAProduct = async (req: Request, res: Response, next: NextFunction) => {
 const updateAProduct = async (
   req: Request,
   res: Response,
-  next: NextFunction
+  next: NextFunction,
 ) => {
   try {
     const id = req.params.id;
@@ -75,7 +75,7 @@ const updateAProduct = async (
 const deleteAProduct = async (
   req: Request,
   res: Response,
-  next: NextFunction
+  next: NextFunction,
 ) => {
   try {
     const id = req.params.id;

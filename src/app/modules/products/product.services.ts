@@ -18,7 +18,7 @@ const updateAProductFromDB = async (id: string, productData: IProducts) => {
   const response = await Product.findOneAndUpdate(
     { _id: id },
     { $set: productData },
-    { new: true }
+    { new: true },
   );
   return response;
 };
