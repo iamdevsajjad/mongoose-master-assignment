@@ -9,9 +9,11 @@ async function main() {
     await mongoose.connect(config.dbUrl as string);
 
     app.listen(config.port || port, () => {
+      // eslint-disable-next-line no-console
       console.log(`server is running on port ${config.port || port}`);
     });
   } catch (error) {
+    // eslint-disable-next-line no-console
     console.log(error);
   }
 }

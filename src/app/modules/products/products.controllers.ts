@@ -22,7 +22,6 @@ const getAllProduct = async (
 ) => {
   try {
     const { searchTerm } = req.query;
-    console.log(searchTerm);
 
     const data = await productServices.fetchAllProductsFromDB(
       searchTerm as string,
@@ -83,7 +82,7 @@ const deleteAProduct = async (
 ) => {
   try {
     const id = req.params.id;
-    const data = await productServices.deleteAProductFromDB(id);
+    await productServices.deleteAProductFromDB(id);
     res.send({
       success: true,
       message: "Product deleted successfully!",

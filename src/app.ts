@@ -1,5 +1,5 @@
 import cors from "cors";
-import express, { NextFunction, Request, Response } from "express";
+import express, { Request, Response } from "express";
 import orderRoutes from "./app/modules/orders/order.routes";
 import productsRoutes from "./app/modules/products/products.routes";
 import { TCustomError } from "./app/utils";
@@ -14,13 +14,12 @@ app.get("/", (req: Request, res: Response) => {
   res.send("hello this is Mongoose master");
 });
 
-app.use(
-  (error: TCustomError, _req: Request, res: Response, _next: NextFunction) => {
-    return res.status(error.status).json({
-      success: error.success,
-      message: error.message,
-    });
-  },
-);
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+app.use((error: TCustomError, _req: Request, res: Response) => {
+  return res.status(error.status).json({
+    success: error.success,
+    message: error.message,
+  });
+});
 
 export default app;
