@@ -1,7 +1,7 @@
-import { IProducts } from "./products.interface";
+import { IProduct } from "./products.interface";
 import Product from "./products.model";
 
-const addProductOnDB = async (productData: IProducts) => {
+const addProductOnDB = async (productData: IProduct) => {
   const response = await Product.create(productData);
   return response;
 };
@@ -19,7 +19,7 @@ const fetchAProductFromDB = async (id: string) => {
   const response = await Product.findById(id);
   return response;
 };
-const updateAProductFromDB = async (id: string, productData: IProducts) => {
+const updateAProductFromDB = async (id: string, productData: IProduct) => {
   const response = await Product.findOneAndUpdate(
     { _id: id },
     { $set: productData },

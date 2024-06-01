@@ -1,14 +1,27 @@
 import { NextFunction, Request, Response } from "express";
 import { productServices } from "./product.services";
+import productValidationSchema from "./product.validation";
+import { IProduct } from "./products.interface";
 
 const addProduct = async (req: Request, res: Response, next: NextFunction) => {
   try {
-    const productData = req.body;
-    const data = await productServices.addProductOnDB(productData);
+    const { data, success, error } = productValidationSchema.safeParse(
+      req.body,
+    );
+
+    if (!success) {
+      return res.status(400).json({
+        success: false,
+        message: error.errors,
+      });
+    }
+
+    const result = await productServices.addProductOnDB(data as IProduct);
+
     res.send({
       success: true,
       message: "Product created successfully!",
-      data: data,
+      data: result,
     });
   } catch (error) {
     next(error);

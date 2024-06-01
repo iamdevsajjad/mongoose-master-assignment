@@ -8,7 +8,7 @@ export interface IInventory {
   inStock: boolean;
 }
 
-export interface IProducts {
+export interface IProduct {
   name: string;
   description: string;
   price: number;
