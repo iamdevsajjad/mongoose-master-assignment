@@ -6,9 +6,14 @@ const addProductOnDB = async (productData: IProducts) => {
   return response;
 };
 
-const fetchAllProductsFromDB = async () => {
-  const response = await Product.find();
-  return response;
+const fetchAllProductsFromDB = async (searchTerm: string) => {
+  if (searchTerm) {
+    return await Product.find({
+      name: { $regex: searchTerm, $options: "i" },
+    });
+  }
+
+  return await Product.find();
 };
 const fetchAProductFromDB = async (id: string) => {
   const response = await Product.findById(id);
@@ -28,18 +33,10 @@ const deleteAProductFromDB = async (id: string) => {
   return response;
 };
 
-const searchProductsFromDB = async (name: string) => {
-  const response = await Product.find({
-    name: { $regex: name, $options: "i" },
-  });
-  return response;
-};
-
 export const productServices = {
   addProductOnDB,
   fetchAllProductsFromDB,
   fetchAProductFromDB,
   updateAProductFromDB,
   deleteAProductFromDB,
-  searchProductsFromDB,
 };

@@ -21,16 +21,20 @@ const getAllProduct = async (
   next: NextFunction,
 ) => {
   try {
-    const name = req.query.searchTerm;
-    if (name) {
-      const data = await productServices.searchProductsFromDB(name as string);
-      return res.send({
+    const { searchTerm } = req.query;
+    console.log(searchTerm);
+
+    const data = await productServices.fetchAllProductsFromDB(
+      searchTerm as string,
+    );
+
+    if (searchTerm) {
+      res.send({
         success: true,
-        message: `Products matching search term '${name}' fetched successfully`,
+        message: `Products matching search term '${searchTerm}' fetched successfully!`,
         data: data,
       });
     }
-    const data = await productServices.fetchAllProductsFromDB();
     res.send({
       success: true,
       message: "Products fetched successfully!",
@@ -89,6 +93,7 @@ const deleteAProduct = async (
     next(error);
   }
 };
+
 export const productsController = {
   addProduct,
   getAllProduct,
