@@ -14,7 +14,7 @@ const createOrder = async (req: Request, res: Response, next: NextFunction) => {
       });
     }
 
-    const result = await createOrderIntoDB(data as IOrder);
+    const result = await createOrderIntoDB(data as IOrder, res);
 
     res.status(201).json({
       success: true,
@@ -30,6 +30,13 @@ const getAll = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const { email } = req.query;
     const result = await getAllOrderFromDB(email as string);
+
+    if (result.length <= 0) {
+      return res.status(404).send({
+        success: false,
+        message: "Order not found",
+      });
+    }
 
     if (email) {
       return res.status(200).json({

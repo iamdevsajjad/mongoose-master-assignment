@@ -1,13 +1,16 @@
+import { Response } from "express";
 import { isValidObjectId } from "mongoose";
-import customError from "../../utils";
 import Product from "../products/products.model";
 import { IOrder } from "./order.interface";
 import Order from "./order.model";
 
-const createOrderIntoDB = async (payload: IOrder) => {
+const createOrderIntoDB = async (payload: IOrder, res: Response) => {
   // check product id valid or not
   if (!isValidObjectId(payload.productId)) {
-    throw customError(false, 400, "Invalid product id");
+    return res.status(404).send({
+      success: false,
+      message: "Product id invalid",
+    });
   }
 
   // find product from db
@@ -15,7 +18,10 @@ const createOrderIntoDB = async (payload: IOrder) => {
 
   // check product is available on the database or not
   if (!product) {
-    throw customError(false, 404, "Product not found");
+    return res.status(404).send({
+      success: false,
+      message: "Product not found",
+    });
   }
 
   const modifiedObj: IOrder = {
@@ -24,11 +30,10 @@ const createOrderIntoDB = async (payload: IOrder) => {
   };
 
   if (payload.quantity > product.inventory.quantity) {
-    throw customError(
-      false,
-      400,
-      "Insufficient quantity available in inventory",
-    );
+    return res.status(404).send({
+      success: false,
+      message: "Insufficient quantity available in inventory",
+    });
   }
 
   product.inventory.quantity = product.inventory.quantity - payload.quantity;
